@@ -12,6 +12,8 @@
       <GameInfo
         :board="board"
         :currentPlayer="currentPlayer"
+        :blackWins="blackWins"
+        :whiteWins="whiteWins"
         @start="showDialog = true"
         @surrender="handleSurrender"
       />
@@ -50,6 +52,8 @@ const difficulty = ref('easy')
 const showDialog = ref(true)
 const gameOver = ref(false)
 const winner = ref(null)
+const blackWins = ref(0)
+const whiteWins = ref(0)
 
 function handleStart(config) {
   board.value = createBoard(config.size)
@@ -83,6 +87,8 @@ function handlePlace({ x, y }) {
 
   if (checkWin(board.value, x, y)) {
     winner.value = playerColor.value
+    if (playerColor.value === 1) blackWins.value++
+    else whiteWins.value++
     gameOver.value = true
     return
   }
@@ -102,6 +108,8 @@ function handlePlace({ x, y }) {
 
       if (checkWin(board.value, move.x, move.y)) {
         winner.value = aiColor.value
+        if (aiColor.value === 1) blackWins.value++
+        else whiteWins.value++
         gameOver.value = true
         return
       }
@@ -119,6 +127,8 @@ function handlePlace({ x, y }) {
 function handleSurrender() {
   if (!confirm('确定要认输吗？')) return
   winner.value = aiColor.value
+  if (aiColor.value === 1) blackWins.value++
+  else whiteWins.value++
   gameOver.value = true
 }
 </script>

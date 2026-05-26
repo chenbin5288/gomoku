@@ -18,6 +18,21 @@
       <div class="info-value">{{ whiteCount }} 子</div>
     </div>
 
+    <div class="info-section score-section">
+      <div class="info-label">胜负记录</div>
+      <div class="score-row">
+        <div class="score-item">
+          <span class="stone-icon black"></span>
+          <span class="score-text">{{ blackWins }} 胜</span>
+        </div>
+        <div class="score-divider">:</div>
+        <div class="score-item">
+          <span class="score-text">{{ whiteWins }} 胜</span>
+          <span class="stone-icon white"></span>
+        </div>
+      </div>
+    </div>
+
     <div class="button-section">
       <button @click="$emit('start')" class="action-btn">开始新局</button>
       <button @click="$emit('surrender')" class="action-btn surrender">认输</button>
@@ -30,7 +45,9 @@ import { computed } from 'vue'
 
 const props = defineProps({
   board: Object,
-  currentPlayer: Number
+  currentPlayer: Number,
+  blackWins: Number,
+  whiteWins: Number
 })
 
 defineEmits(['start', 'surrender'])
@@ -91,6 +108,35 @@ const whiteCount = computed(() => {
 
 .stone-icon.white {
   background: #e0e0e0;
+}
+
+.score-section .info-label {
+  margin-bottom: 12px;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.score-divider {
+  font-size: 24px;
+  font-weight: 700;
+  color: #bbb;
 }
 
 .button-section {
