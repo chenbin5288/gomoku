@@ -51,6 +51,28 @@ function drawGrid(ctx, size) {
     ctx.lineTo(pos, PADDING + (size - 1) * CELL_SIZE)
     ctx.stroke()
   }
+
+  // 绘制星位标记点
+  drawStarPoints(ctx, size)
+}
+
+function drawStarPoints(ctx, size) {
+  // 根据棋盘大小计算星位坐标（约 1/4、1/2、3/4 处）
+  const q = Math.round(size / 4)
+  const h = Math.round(size / 2)
+  const t = size - 1 - q
+  const positions = [q, h, t]
+
+  ctx.fillStyle = '#dddddd'
+  for (const row of positions) {
+    for (const col of positions) {
+      const cx = PADDING + col * CELL_SIZE
+      const cy = PADDING + row * CELL_SIZE
+      ctx.beginPath()
+      ctx.arc(cx, cy, 3, 0, Math.PI * 2)
+      ctx.fill()
+    }
+  }
 }
 
 function drawStones(ctx, board, size) {
